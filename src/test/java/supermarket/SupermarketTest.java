@@ -76,24 +76,14 @@ class SupermarketTest {
 
 
     @Test
-    @DisplayName("valid input test for interactive command mode")
-    public void testExecuteInteractiveCommands() throws IOException {
-        String commands = "checkout\n" +
-                "add soap 5\n" +
-                "add bread 1\n" +
-                "bill\n" +
-                "offer buy_2_get_1_free soap\n" +
-                "bill\n" +
-                "add soap 1\n" +
-                "bill\n" +
-                "offer buy_1_get_half_off bread\n" +
-                "add bread 1\n" +
-                "bill\n" +
-                "checkout\n";
+    @DisplayName("invalid input test for interactive command mode")
+    public void testInvalidInputExecuteInteractiveCommands() throws IOException {
+        String commands = "check\n";
 
         InputStream inputStream = new ByteArrayInputStream(commands.getBytes());
         System.setIn(inputStream);
         String result = supermarket.executeInteractiveCommands();
-        assertEquals("done", result);
+        assertEquals("$ check\n" +
+                "Invalid command", result);
     }
 }

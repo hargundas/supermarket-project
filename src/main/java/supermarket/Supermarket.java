@@ -102,6 +102,8 @@ public class Supermarket {
                     }
                     break;
                 default:
+                    System.out.println("Invalid command: " + line);
+                    result=result+"Invalid command";
                     break;
             }
 
