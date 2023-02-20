@@ -15,7 +15,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DisplayName("Inventory class")
+@DisplayName("InventoryTest class")
 class InventoryTest {
 
     private Inventory inventory;

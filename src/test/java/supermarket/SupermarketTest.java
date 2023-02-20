@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Supermarket Test Class")
 class SupermarketTest {
 
+    private static final String INVENTORY_FILE = "inventory.csv";
     private static final String INPUT = "input.txt";
     String expectedOutput = "$ checkout\n" +
             "empty cart\n" +
@@ -41,10 +42,38 @@ class SupermarketTest {
 
     private Supermarket supermarket;
 
+    private static Inventory inventory;
 
-    @BeforeEach
+     @BeforeEach
     void setUp() throws IOException {
+        inventory = new Inventory(INVENTORY_FILE);
+        supermarket = new Supermarket(inventory);
      }
+
+
+
+     @Test
+     @DisplayName("Test command ADD for interactive command mode")
+     public void testAddExecuteInteractiveCommands() throws IOException{
+        String commands = "add soap 5";
+         InputStream inputStream = new ByteArrayInputStream(commands.getBytes());
+         System.setIn(inputStream);
+         String result = supermarket.executeInteractiveCommands();
+         assertEquals("$ add soap 5\n" + "added soap 5\n", result);
+     }
+
+    @Test
+    @DisplayName("Test command Checkout for interactive command mode")
+    public void testCheckoutExecuteInteractiveCommands() throws IOException{
+        String commands = "checkout";
+        InputStream inputStream = new ByteArrayInputStream(commands.getBytes());
+        System.setIn(inputStream);
+        String result = supermarket.executeInteractiveCommands();
+        assertEquals("$ checkout\n" +
+                "empty cart\n", result);
+    }
+
+
 
     @Test
     @DisplayName("valid input test for interactive command mode")
