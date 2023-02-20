@@ -1,4 +1,4 @@
-package supermarket;
+package supermarket.dto;
 
 public class Product {
 
