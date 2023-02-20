@@ -26,6 +26,7 @@ public class ShoppingCart {
             System.out.println("Quantity can not be less than 0");
             return  0;
         }
+
         int addedQuantity = updateCartItem(product, quantity);
         if (addedQuantity < quantity) {
             System.out.println("Not all items could be added to the cart for " + name);

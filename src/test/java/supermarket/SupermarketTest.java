@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,6 +16,8 @@ class SupermarketTest {
 
     private static final String INVENTORY_FILE = "inventory.csv";
     private static final String INPUT = "input.txt";
+    private static final String INVALID_INPUT = "invalid_input.txt";
+
     String expectedOutput = "$ checkout\n" +
             "empty cart\n" +
             "$ add soap 5\n" +
@@ -126,6 +129,47 @@ class SupermarketTest {
     }
 
 
+    @Test
+    @DisplayName("Test execute valid command from file")
+    public void testValidExecutCommandsFromFile() {
+        String result = "";
 
+        try {
+            result = supermarket.executeCommandsFromFile(INPUT);
+         } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        assertEquals(expectedOutput, result);
+    }
+
+
+    @Test
+    @DisplayName("Test execute invalid command from file")
+    public void testInvalidExecutCommandsFromFile() {
+        String result = "";
+
+        try {
+            result = supermarket.executeCommandsFromFile(INVALID_INPUT);
+            System.out.println(result);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        assertEquals("$ chect\n" +"Invalid command\n" + "$ add 5 soap\n" + "$ add bread 1111\n" + "added bread " +
+                "1111\n" + "$ bill\n" + "subtotal:2777.50, discount:0.00, total:2777.50\n"
+                + "$ checkout\n" + "done", result);
+    }
+
+
+
+
+    @Test
+    @DisplayName("Test execute command from file which is not exist")
+    public void testNotExistFileExecutCommandsFromFile() {
+        assertThrows(FileNotFoundException.class, () -> {
+            supermarket.executeCommandsFromFile("NOT_EXISTS.csv");
+        });
+    }
 
 }
