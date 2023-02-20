@@ -51,5 +51,11 @@ public class ShoppingCart {
     }
 
 
-
+    public double calculateTotalPrice() {
+        double total = 0;
+        for (CartItem item : cartItems) {
+            total += item.getQuantity() * item.getProduct().getPrice();
+        }
+        return total;
+    }
 }

@@ -62,6 +62,8 @@ class SupermarketTest {
          assertEquals("$ add soap 5\n" + "added soap 5\n", result);
      }
 
+
+
     @Test
     @DisplayName("Test command Checkout for interactive command mode")
     public void testCheckoutExecuteInteractiveCommands() throws IOException{
@@ -72,8 +74,44 @@ class SupermarketTest {
         assertEquals("$ checkout\n" +
                 "empty cart\n", result);
     }
+    @Test
+    @DisplayName("Test command Bill for interactive command mode")
+    public void testBillExecuteInteractiveCommands() throws IOException{
+        String commands = "bill";
+        InputStream inputStream = new ByteArrayInputStream(commands.getBytes());
+        System.setIn(inputStream);
+        String result = supermarket.executeInteractiveCommands();
+        assertEquals("$ bill\n" +
+                "subtotal:0.00, discount:0.00, total:0.00\n", result);
+    }
+    @Test
+    @DisplayName("Test command Bill for interactive command mode and add 1 product in item")
+    public void testAddProductBillExecuteInteractiveCommands() throws IOException{
+        String commands = "add soap 5\n" +
+                "bill";
+        InputStream inputStream = new ByteArrayInputStream(commands.getBytes());
+        System.setIn(inputStream);
+        String result = supermarket.executeInteractiveCommands();
+        assertEquals("$ add soap 5\n" +
+                "added soap 5\n" +
+                "$ bill\n" +
+                "subtotal:50.00, discount:0.00, total:50.00\n", result);
+    }
 
 
+    @Test
+    @DisplayName("Test get non existent product and bill")
+    public void testNonExistProductAndBillExecuteInteractiveCommands(){
+        String commands = "add egg 5\n" +
+                "bill";
+        InputStream inputStream = new ByteArrayInputStream(commands.getBytes());
+        System.setIn(inputStream);
+        String result = supermarket.executeInteractiveCommands();
+        assertEquals("$ add egg 5\n" +
+                " product not found\n" +
+                "$ bill\n" +
+                "subtotal:0.00, discount:0.00, total:0.00\n", result);
+    }
 
     @Test
     @DisplayName("invalid input test for interactive command mode")
@@ -86,4 +124,8 @@ class SupermarketTest {
         assertEquals("$ check\n" +
                 "Invalid command", result);
     }
+
+
+
+
 }

@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class InventoryTest {
 
     private Inventory inventory;
+    private static final String INVALID_TEST_FILE_NAME = "inventory1.csv";
 
     @BeforeEach
     void setUp() throws IOException {
@@ -71,6 +72,11 @@ class InventoryTest {
         Assertions.assertNull(product);
     }
 
-
+    @Test
+    void testInvalidInventoryFile() {
+        Assertions.assertThrows(FileNotFoundException.class, () -> {
+            new Inventory(INVALID_TEST_FILE_NAME);
+        });
+    }
 }
 
