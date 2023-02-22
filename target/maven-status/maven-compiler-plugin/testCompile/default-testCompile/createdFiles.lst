@@ -1,2 +1,5 @@
-supermarket\InventoryTest.class
 supermarket\SupermarketTest.class
+supermarket\ShoppingCartTest.class
+supermarket\Buy1GetHalfOffTest.class
+supermarket\InventoryTest.class
+supermarket\Buy2Get1FreeTest.class
